@@ -9,6 +9,7 @@ public class ParticleEffect {
     private double movementElapsed = 0;
     private double relativeMovementPerTick;
     private Particle particle;
+    private int particleCount;
 
     public ParticleEffect(ParticleEffectType particleEffectType,
                           Trajectory trajectory) {
@@ -16,28 +17,39 @@ public class ParticleEffect {
         this.trajectory = trajectory;
         this.relativeMovementPerTick = 0.3;
         this.particle = Particle.HAPPY_VILLAGER;
+        this.particleCount = 5;
     }
 
     public ParticleEffect(ParticleEffectType particleEffectType,
                           Trajectory trajectory,
-                          double relativeMovementPerTick) {
+                          int particleCount) {
         this(particleEffectType, trajectory);
+        this.particleCount = particleCount;
+    }
+
+    public ParticleEffect(ParticleEffectType particleEffectType,
+                          Trajectory trajectory,
+                          int particleCount,
+                          Particle particle) {
+        this(particleEffectType, trajectory, particleCount);
+        this.particle = particle;
+    }
+
+    public ParticleEffect(ParticleEffectType particleEffectType,
+                          Trajectory trajectory,
+                          int particleCount,
+                          Particle particle,
+                          double relativeMovementPerTick) {
+        this(particleEffectType, trajectory, particleCount, particle);
         this.relativeMovementPerTick = relativeMovementPerTick;
     }
 
-    public ParticleEffect(ParticleEffectType particleEffectType,
-                          Trajectory trajectory,
-                          Particle particle) {
-        this(particleEffectType, trajectory);
-        this.particle = particle;
+    public int getParticleCount() {
+        return particleCount;
     }
 
-    public ParticleEffect(ParticleEffectType particleEffectType,
-                          Trajectory trajectory,
-                          double relativeMovementPerTick,
-                          Particle particle) {
-        this(particleEffectType, trajectory, relativeMovementPerTick);
-        this.particle = particle;
+    public void setParticleCount(int particleCount) {
+        this.particleCount = particleCount;
     }
 
     public ParticleEffectType getParticleEffectType() {
@@ -70,6 +82,10 @@ public class ParticleEffect {
 
     public void setParticle(Particle particle) {
         this.particle = particle;
+    }
+
+    public void setMovementElapsed(double movementElapsed) {
+        this.movementElapsed = movementElapsed;
     }
 
     public double getMovementElapsed() {

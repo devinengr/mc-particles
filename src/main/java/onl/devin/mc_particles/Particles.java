@@ -18,10 +18,8 @@ import static java.lang.Math.*;
 public class Particles extends JavaPlugin implements Listener {
 
     private void spawnParticles(Player player, TrajectoryType trajectoryType, ParticleEffectType particleEffectType) {
-        double blocksPerTick = 0.1;
-        double relativeMovementPerTick = 0.3;
-        Trajectory trajectory = new Trajectory(player, trajectoryType, blocksPerTick);
-        ParticleEffect particleEffect = new ParticleEffect(particleEffectType, trajectory, relativeMovementPerTick);
+        Trajectory trajectory = new Trajectory(player, trajectoryType);
+        ParticleEffect particleEffect = new ParticleEffect(particleEffectType, trajectory, 5, Particle.ELECTRIC_SPARK);
         ParticleRunner particleRunner = new ParticleRunner(this, particleEffect);
         particleRunner.start();
     }
@@ -31,7 +29,8 @@ public class Particles extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(this, this);
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.isOp()) {
-                spawnParticles(player, new TrajectoryTypeOrbitPlayer(), new ParticleEffectTypeDoubleHelix());
+//                spawnParticles(player, new TrajectoryTypeOrbitPlayer(), new ParticleEffectTypeDoubleHelix());
+                spawnParticles(player, new TrajectoryTypeOrbitPlayer(), new ParticleEffectTypeBasic());
             }
         }
     }
