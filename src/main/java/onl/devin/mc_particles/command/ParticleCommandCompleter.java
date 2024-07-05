@@ -1,6 +1,5 @@
 package onl.devin.mc_particles.command;
 
-import org.bukkit.Particle;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -24,10 +23,10 @@ public class ParticleCommandCompleter implements TabCompleter {
                                                 @NotNull String s,
                                                 @NotNull String[] strings) {
         // get all possible arguments for the current argument
-        PCComponent[] expected = PCComponent.getExpectedComponents(strings);
+        ParticleCommandComponent[] expected = ParticleCommandComponent.getExpectedComponents(strings);
         List<String> all = new ArrayList<>();
         if (expected != null) {
-            for (PCComponent component : expected) {
+            for (ParticleCommandComponent component : expected) {
                 if (component != null) {
                     for (String option : component.getOptions()) {
                         // match against the start of what the user typed
