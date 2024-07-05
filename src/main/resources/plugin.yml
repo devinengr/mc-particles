@@ -3,3 +3,8 @@ author: devinengr
 version: 1.0.0-alpha
 main: onl.devin.mc_particles.Particles
 api-version: 1.20.6
+commands:
+  particles:
+    description: Summon fancy particle effects
+    usage: /<command> [<player>] <start/stop> [<particle> <pattern> <trajectory>]
+    aliases: [part]

@@ -1,4 +1,4 @@
-package onl.devin.mc_particles;
+package onl.devin.mc_particles.effect;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

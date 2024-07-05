@@ -1,5 +1,6 @@
-package onl.devin.mc_particles;
+package onl.devin.mc_particles.effect;
 
+import onl.devin.mc_particles.trajectory.Trajectory;
 import org.bukkit.Particle;
 
 public class ParticleEffect {

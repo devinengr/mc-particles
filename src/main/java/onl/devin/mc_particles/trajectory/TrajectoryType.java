@@ -1,4 +1,4 @@
-package onl.devin.mc_particles;
+package onl.devin.mc_particles.trajectory;
 
 public interface TrajectoryType {
 

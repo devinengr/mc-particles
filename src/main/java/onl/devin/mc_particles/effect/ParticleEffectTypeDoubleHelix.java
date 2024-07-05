@@ -1,5 +1,6 @@
-package onl.devin.mc_particles;
+package onl.devin.mc_particles.effect;
 
+import onl.devin.mc_particles.trajectory.Trajectory;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;

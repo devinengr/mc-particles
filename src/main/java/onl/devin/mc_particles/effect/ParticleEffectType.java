@@ -1,6 +1,4 @@
-package onl.devin.mc_particles;
-
-import org.bukkit.util.Vector;
+package onl.devin.mc_particles.effect;
 
 public interface ParticleEffectType {
 
