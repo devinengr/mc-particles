@@ -4,18 +4,22 @@ import onl.devin.mc_particles.effect.ParticleEffectEnum;
 import onl.devin.mc_particles.trajectory.TrajectoryEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
+import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.List;
 
 public enum ParticleCommandComponent {
 
-    PLAYER(Bukkit.getOnlinePlayers().stream().map(p -> p.getName()).toList()),
+    PLAYER(Bukkit.getOnlinePlayers().stream().map(Player::getName).toList()),
     ACTION(List.of("start", "stop")),
-    PARTICLE_EFFECT(Arrays.stream(Particle.values()).map(p -> p.toString().toLowerCase()).toList()),
-    PARTICLE_TYPE(Arrays.stream(ParticleEffectEnum.values()).map(p -> p.toString().toLowerCase()).toList()),
-    TRAJECTORY_TYPE(Arrays.stream(TrajectoryEnum.values()).map(t -> t.toString().toLowerCase()).toList()),
+    PARTICLE_EFFECT(toLowerCaseStrings(List.of(Particle.values()))),
+    PARTICLE_TYPE(toLowerCaseStrings(List.of(ParticleEffectEnum.values()))),
+    TRAJECTORY_TYPE(toLowerCaseStrings(List.of(TrajectoryEnum.values()))),
     ;
+
+    private static List<String> toLowerCaseStrings(List<?> enumValues) {
+        return enumValues.stream().map(e -> e.toString().toLowerCase()).toList();
+    }
 
     private List<String> options;
 

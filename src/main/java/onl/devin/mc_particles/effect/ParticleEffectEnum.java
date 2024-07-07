@@ -2,16 +2,18 @@ package onl.devin.mc_particles.effect;
 
 public enum ParticleEffectEnum {
 
-    BASIC,
-    DOUBLE_HELIX,
+    BASIC(new ParticleEffectTypeBasic()),
+    DOUBLE_HELIX(new ParticleEffectTypeDoubleHelix()),
     ;
 
+    private ParticleEffectType particleEffectType;
+
+    ParticleEffectEnum(ParticleEffectType particleEffectType) {
+        this.particleEffectType = particleEffectType;
+    }
+
     public ParticleEffectType getParticleEffectType() {
-        switch (this) {
-            case BASIC: return new ParticleEffectTypeBasic();
-            case DOUBLE_HELIX: return new ParticleEffectTypeDoubleHelix();
-            default: throw new RuntimeException("Handle new particle effect types here");
-        }
+        return particleEffectType;
     }
 
 }
