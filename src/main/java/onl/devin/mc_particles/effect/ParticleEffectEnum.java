@@ -6,4 +6,12 @@ public enum ParticleEffectEnum {
     DOUBLE_HELIX,
     ;
 
+    public ParticleEffectType getParticleEffectType() {
+        switch (this) {
+            case BASIC: return new ParticleEffectTypeBasic();
+            case DOUBLE_HELIX: return new ParticleEffectTypeDoubleHelix();
+            default: throw new RuntimeException("Handle new particle effect types here");
+        }
+    }
+
 }

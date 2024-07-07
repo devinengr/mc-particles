@@ -14,15 +14,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Particles extends JavaPlugin implements Listener {
 
-    private void spawnParticles(Player player, TrajectoryType trajectoryType, ParticleEffectType particleEffectType) {
-        Trajectory trajectory = new Trajectory(player, trajectoryType);
-        ParticleEffect particleEffect = new ParticleEffect(particleEffectType, trajectory, 5, Particle.ELECTRIC_SPARK);
-        ParticleRunner particleRunner = new ParticleRunner(this, particleEffect);
-        particleRunner.start();
-    }
 
     private void registerParticleCommand() {
-        ParticleCommand command = new ParticleCommand();
+        ParticleCommand command = new ParticleCommand(this);
         ParticleCommandCompleter completer = new ParticleCommandCompleter(command);
         this.getCommand(command.getName()).setExecutor(command);
         this.getCommand(command.getName()).setTabCompleter(completer);
