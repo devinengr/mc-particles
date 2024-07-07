@@ -8,6 +8,9 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+import static onl.devin.mc_particles.command.ParticleCommandChecker.argumentIsActionStop;
+import static onl.devin.mc_particles.command.ParticleCommandChecker.firstArgumentIsOnlinePlayer;
+
 public enum ParticleCommandComponent {
 
     PLAYER(Bukkit.getOnlinePlayers().stream().map(Player::getName).toList()),
@@ -31,15 +34,6 @@ public enum ParticleCommandComponent {
         return options;
     }
 
-    public static boolean firstComponentIsPlayer(String[] partialCommand) {
-        if (partialCommand.length >= 1) {
-            if (PLAYER.getOptions().contains(partialCommand[0])) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static ParticleCommandComponent getExpectedByArgCount(String[] partialCommand, boolean firstIsPlayer) {
         int offset = partialCommand.length;
         if (firstIsPlayer) {
@@ -55,14 +49,8 @@ public enum ParticleCommandComponent {
     }
 
     public static boolean actionIsStop(String[] partialCommand) {
-        int indexAction = 0;
-        if (firstComponentIsPlayer(partialCommand)) {
-            indexAction = 1;
-        }
-        if (partialCommand[indexAction].equalsIgnoreCase("stop")) {
-            return true;
-        }
-        return false;
+        return argumentIsActionStop(partialCommand, 0)
+                || argumentIsActionStop(partialCommand, 1);
     }
 
     public static ParticleCommandComponent[] getExpectedComponents(String[] partialCommand) {
@@ -70,15 +58,12 @@ public enum ParticleCommandComponent {
         if (argCount <= 1) {
             return new ParticleCommandComponent[]{ACTION, PLAYER};
         } else {
-            if ((firstComponentIsPlayer(partialCommand) && argCount >= 2)
-                    || (!firstComponentIsPlayer(partialCommand) && argCount >= 1)) {
-                if (actionIsStop(partialCommand)) {
-                    return null;
-                }
+            if (actionIsStop(partialCommand)) {
+                return null;
             }
             return new ParticleCommandComponent[] {
                     getExpectedByArgCount(partialCommand,
-                    firstComponentIsPlayer(partialCommand)) };
+                    firstArgumentIsOnlinePlayer(partialCommand)) };
         }
     }
 

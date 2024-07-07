@@ -8,6 +8,8 @@ import onl.devin.mc_particles.trajectory.Trajectory;
 import onl.devin.mc_particles.trajectory.TrajectoryEnum;
 import onl.devin.mc_particles.trajectory.TrajectoryType;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,6 +22,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static onl.devin.mc_particles.command.ParticleCommandChecker.checkForInvalidOptions;
+import static onl.devin.mc_particles.command.ParticleCommandChecker.firstArgumentIsOnlinePlayer;
+import static onl.devin.mc_particles.command.ParticleCommandComponent.actionIsStop;
 
 public class ParticleCommand implements CommandExecutor {
 
@@ -42,7 +48,6 @@ public class ParticleCommand implements CommandExecutor {
             playerParticleMap.put(player, list);
         }
         list.add(runner);
-//        playerParticleMap.put(player,);
     }
 
     private void spawnParticles(Player player,
@@ -56,49 +61,45 @@ public class ParticleCommand implements CommandExecutor {
         addToMap(player, particleRunner);
     }
 
+    private void stopParticles(Player player) {
+        List<ParticleRunner> currentParticles = playerParticleMap.get(player);
+        if (currentParticles != null) {
+            for (ParticleRunner particleRunner : currentParticles) {
+                particleRunner.stop();
+            }
+        }
+        playerParticleMap.remove(player);
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender,
                              @NotNull Command command,
                              @NotNull String s,
                              @NotNull String[] strings) {
-        // todo usage: /<command> [<player>] <start/stop> [<particle> <pattern> <trajectory>]
-
-        // todo check for invalid options
-
+        if (!checkForInvalidOptions(commandSender, strings)) {
+            return true;
+        }
         Player player;
         int offset = 0;
-        if (ParticleCommandComponent.firstComponentIsPlayer(strings)) {
+        if (firstArgumentIsOnlinePlayer(strings)) {
             offset += 1;
             player = Bukkit.getPlayer(strings[0]);
         } else {
             if (commandSender instanceof Player) {
                 player = (Player) commandSender;
             } else {
-                commandSender.sendMessage("Please specify a player to apply particles to.");
+                commandSender.sendMessage("If you see this message, you broke the game :(");
                 return true;
             }
         }
-
-        if (ParticleCommandComponent.actionIsStop(strings)) {
-            List<ParticleRunner> currentParticles = playerParticleMap.get(player);
-            if (currentParticles != null) {
-                for (ParticleRunner particleRunner : currentParticles) {
-                    particleRunner.stop();
-                }
-            }
-            playerParticleMap.remove(player);
+        if (actionIsStop(strings)) {
+            stopParticles(player);
             return true;
         }
-
-        // todo try without uppercase
-//        boolean action = Boolean.parseBoolean(strings[offset]);
         Particle particle = Particle.valueOf(strings[offset + 1].toUpperCase());
         ParticleEffectType particleEffectType = ParticleEffectEnum.valueOf(strings[offset + 2].toUpperCase()).getNewInstance();
         TrajectoryType trajectoryType = TrajectoryEnum.valueOf(strings[offset + 3].toUpperCase()).getNewInstance();
-
-        // spawn particles
         spawnParticles(player, particle, particleEffectType, trajectoryType);
-
         return true;
     }
 

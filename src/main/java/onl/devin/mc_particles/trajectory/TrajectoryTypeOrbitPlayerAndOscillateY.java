@@ -1,7 +1,5 @@
 package onl.devin.mc_particles.trajectory;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import static java.lang.Math.*;
