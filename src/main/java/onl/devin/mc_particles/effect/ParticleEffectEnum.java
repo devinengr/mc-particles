@@ -1,5 +1,7 @@
 package onl.devin.mc_particles.effect;
 
+import onl.devin.mc_particles.trajectory.TrajectoryType;
+
 public enum ParticleEffectEnum {
 
     BASIC(new ParticleEffectTypeBasic()),
@@ -12,8 +14,14 @@ public enum ParticleEffectEnum {
         this.particleEffectType = particleEffectType;
     }
 
-    public ParticleEffectType getParticleEffectType() {
-        return particleEffectType;
+    public ParticleEffectType getNewInstance() {
+        ParticleEffectType newInstance;
+        try {
+            newInstance = particleEffectType.getClass().getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return newInstance;
     }
 
 }

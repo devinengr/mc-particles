@@ -7,7 +7,6 @@ import onl.devin.mc_particles.effect.ParticleEffectType;
 import onl.devin.mc_particles.trajectory.Trajectory;
 import onl.devin.mc_particles.trajectory.TrajectoryEnum;
 import onl.devin.mc_particles.trajectory.TrajectoryType;
-import org.apache.commons.lang3.NotImplementedException;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.command.Command;
@@ -94,8 +93,8 @@ public class ParticleCommand implements CommandExecutor {
         // todo try without uppercase
 //        boolean action = Boolean.parseBoolean(strings[offset]);
         Particle particle = Particle.valueOf(strings[offset + 1].toUpperCase());
-        ParticleEffectType particleEffectType = ParticleEffectEnum.valueOf(strings[offset + 2].toUpperCase()).getParticleEffectType();
-        TrajectoryType trajectoryType = TrajectoryEnum.valueOf(strings[offset + 3].toUpperCase()).getTrajectoryType();
+        ParticleEffectType particleEffectType = ParticleEffectEnum.valueOf(strings[offset + 2].toUpperCase()).getNewInstance();
+        TrajectoryType trajectoryType = TrajectoryEnum.valueOf(strings[offset + 3].toUpperCase()).getNewInstance();
 
         // spawn particles
         spawnParticles(player, particle, particleEffectType, trajectoryType);
