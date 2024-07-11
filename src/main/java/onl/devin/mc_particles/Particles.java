@@ -9,11 +9,12 @@ import onl.devin.mc_particles.trajectory.TrajectoryType;
 import org.bukkit.*;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Particles extends JavaPlugin implements Listener {
-
 
     private void registerParticleCommand() {
         ParticleCommand command = new ParticleCommand(this);
@@ -26,6 +27,12 @@ public class Particles extends JavaPlugin implements Listener {
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
         registerParticleCommand();
+    }
+
+    @EventHandler
+    public void onLeave(PlayerQuitEvent e) {
+        Player player = e.getPlayer();
+        ParticleRunner.stopAllParticles(player);
     }
 
 }

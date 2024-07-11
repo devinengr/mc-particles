@@ -30,24 +30,13 @@ import static onl.devin.mc_particles.command.ParticleCommandComponent.actionIsSt
 public class ParticleCommand implements CommandExecutor {
 
     private JavaPlugin plugin;
-    private Map<Player, List<ParticleRunner>> playerParticleMap;
 
     public ParticleCommand(JavaPlugin plugin) {
         this.plugin = plugin;
-        this.playerParticleMap = new HashMap<>();
     }
 
     public String getName() {
         return "particles";
-    }
-
-    private void addToMap(Player player, ParticleRunner runner) {
-        List<ParticleRunner> list = playerParticleMap.get(player);
-        if (list == null) {
-            list = new ArrayList<>();
-            playerParticleMap.put(player, list);
-        }
-        list.add(runner);
     }
 
     private void spawnParticles(Player player,
@@ -56,19 +45,8 @@ public class ParticleCommand implements CommandExecutor {
                                 TrajectoryType trajectoryType) {
         Trajectory trajectory = new Trajectory(player, trajectoryType);
         ParticleEffect particleEffect = new ParticleEffect(particleEffectType, trajectory, 5, particle);
-        ParticleRunner particleRunner = new ParticleRunner(plugin, particleEffect);
+        ParticleRunner particleRunner = new ParticleRunner(plugin, particleEffect, player);
         particleRunner.start();
-        addToMap(player, particleRunner);
-    }
-
-    private void stopParticles(Player player) {
-        List<ParticleRunner> currentParticles = playerParticleMap.get(player);
-        if (currentParticles != null) {
-            for (ParticleRunner particleRunner : currentParticles) {
-                particleRunner.stop();
-            }
-        }
-        playerParticleMap.remove(player);
     }
 
     @Override
@@ -93,7 +71,7 @@ public class ParticleCommand implements CommandExecutor {
             }
         }
         if (actionIsStop(strings)) {
-            stopParticles(player);
+            ParticleRunner.stopAllParticles(player);
             return true;
         }
         Particle particle = Particle.valueOf(strings[offset + 1].toUpperCase());

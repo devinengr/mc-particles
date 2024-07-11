@@ -39,6 +39,7 @@ public enum ParticleCommandComponent {
         if (firstIsPlayer) {
             offset -= 1;
         }
+        // todo this is disgusting, assign offset to the enums
         switch (offset) {
             case 1: return ACTION;
             case 2: return PARTICLE_EFFECT;
