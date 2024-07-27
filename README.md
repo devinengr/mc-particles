@@ -1,5 +1,6 @@
 # Particles (Minecraft plugin)
 
+![downward leaves](media/particles_downward_leaves.gif)
 
 # Requirements
 
@@ -35,6 +36,10 @@ If you want to apply or cancel particle effects for another player, or if you ar
 
 /part Bob stop
 ```
+
+![cmd honey](media/particles_cmd_honey.gif)
+
+![cmd leaves](media/particles_cmd_leaves.gif)
 
 # How to compile
 
